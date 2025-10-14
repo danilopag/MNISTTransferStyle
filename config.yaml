@@ -1,0 +1,72 @@
+# Modalità iterativa
+feature_extractor: "vgg"
+content_folder: "numbers"
+results_folder: "results"
+single_image: True         # Se True, elabora una singola immagine, altrimenti una directory
+
+# Parametri globali per l'ottimizzazione iterativa
+seed: 50
+n_epochs: 10               # Numero di epoche
+steps_per_epoch: 400       # Numero di step per epoca
+learning_rate: 0.001       # Learning rate per l'ottimizzazione dell'immagine target
+optimizer: "adam"
+content_weight: 1.0        # Peso della content loss (mantiene intatto il contenuto)
+style_weight: 50.0         # Peso della style loss (trasferisce lo stile)
+batch_size: 4
+show_every: 100
+
+# Fine-tuning: se true, sblocca i pesi di VGG e li aggiorna con un learning rate ridotto
+finetune_vgg: False         # Imposta a True per attivare il fine-tuning di VGG
+vgg_learning_rate: 0.0001   # Learning rate per i pesi di VGG (molto più basso rispetto al target)
+
+# Definizione degli esperimenti per la modalità iterativa:
+# Variando learning rate e pesi content/style per valutare l'impatto sui risultati.
+experiments:
+  - exp_name: "exp_lr0.01_content1_style50_epochs5"
+    optimizer: "adam"
+    learning_rate: 0.01
+    n_epochs: 5
+    steps_per_epoch: 400
+    content_weight: 1.0
+    style_weight: 50.0
+    show_every: 100
+  - exp_name: "exp_lr0.01_content1_style50_epochs10"
+    optimizer: "adam"
+    learning_rate: 0.01
+    n_epochs: 10
+    steps_per_epoch: 400
+    content_weight: 1.0
+    style_weight: 50.0
+    show_every: 100
+  - exp_name: "exp_lr0.005_content1_style50_epochs5"
+    optimizer: "adam"
+    learning_rate: 0.005
+    n_epochs: 5
+    steps_per_epoch: 400
+    content_weight: 1.0
+    style_weight: 50.0
+    show_every: 100
+  - exp_name: "exp_lr0.005_content1_style50_epochs10"
+    optimizer: "adam"
+    learning_rate: 0.005
+    n_epochs: 10
+    steps_per_epoch: 400
+    content_weight: 1.0
+    style_weight: 50.0
+    show_every: 100
+  - exp_name: "exp_lr0.01_content0.5_style75"
+    optimizer: "adam"
+    learning_rate: 0.01
+    n_epochs: 10
+    steps_per_epoch: 400
+    content_weight: 0.5
+    style_weight: 75.0
+    show_every: 100
+  - exp_name: "exp_lr0.005_content0.5_style75"
+    optimizer: "adam"
+    learning_rate: 0.005
+    n_epochs: 10
+    steps_per_epoch: 400
+    content_weight: 0.5
+    style_weight: 75.0
+    show_every: 100
